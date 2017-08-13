@@ -1,5 +1,7 @@
 import time
+
 import RPi.GPIO as GPIO
+
 
 class LED():
     def __init__(self):
@@ -28,4 +30,5 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         led.destroy()
+
 
