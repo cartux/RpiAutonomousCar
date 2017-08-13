@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-import RPi.GPIO as GPIO
 import time
 
-class HCSR04():
-    """
-    This class provides functions to interface with an ultrasonic  range sensor
-    """
+import RPi.GPIO as GPIO
+
+
+class UltrasonicRanger():
+
+    """Interface with an HCSR04 ultrasonic range sensor."""
+
     def __init__(self):
         self._TRIGPin = 15
         self._ECHOPin = 14
@@ -42,7 +44,7 @@ class HCSR04():
         during = time2 - time1
         return 1, during * 340.0 / 2.0 * 100
 
-    def get_averageDistance(self):
+    def get_average_distance(self):
         i = 0
         distance = 0
         errorCount = 0
@@ -62,10 +64,10 @@ class HCSR04():
 
 
 if __name__ == "__main__":
-    ultrasonic = HCSR04()
+    ultrasonic = UltrasonicRanger()
     try:
         while True:
-            qualifier,dis = ultrasonic.get_averageDistance()
+            qualifier,dis = ultrasonic.get_average_distance()
             if qualifier == 1:
                 print dis, 'cm'
             else:

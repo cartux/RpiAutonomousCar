@@ -1,20 +1,19 @@
 #!/usr/bin/env python()
-import time
-from HCSR04    import HCSR04
-from MCP3004   import MCP3004
-from TB6612FNG import TB6612FNG
-from LED       import LED
-from threading import Thread
 import socket
-import RPi.GPIO as GPIO
+import time
+from threading import Thread
+
+from LED import LED
+from MotorDriver import MotorDriver
+from UltrasonicRanger import UltrasonicRanger
 
 VERBOSE = False
 IP_PORT = 22000
 
 
-UltrasonicObj = HCSR04()
+UltrasonicObj = UltrasonicRanger()
 LedObj = LED()
-RobotDriveObj = TB6612FNG()
+RobotDriveObj = MotorDriver()
 
 class SocketHandler(Thread):
     def __init__(self, conn):
