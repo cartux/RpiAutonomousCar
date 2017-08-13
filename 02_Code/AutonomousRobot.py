@@ -1,44 +1,38 @@
-#!/usr/bin/env python()
+#!/usr/bin/env python
+
 import time
-from HCSR04    import HCSR04
-from MCP3004   import MCP3004
-from TB6612FNG import TB6612FNG
-from LED       import LED
+
+from LED import LED
+from MotorDriver import MotorDriver
+from UltrasonicRanger import UltrasonicRanger
 
 
-def setup():
-    pass
+def loop(sensor, drive):
+    duty_cycle = 4
 
-def loop(hcsr04, tb6612fng, led):
-    distance  = 0
-    qualifier = 0
-    DutyCycle = 4
-
-    while 1:
-        qualifier,distance =  hcsr04.get_averageDistance()
-        #print 'Distance = '+ str(distance)
+    while True:
+        qualifier, distance = sensor.get_average_distance()
         if qualifier == 1:
             if distance < 20:
-                robotDrive.stop()
+                drive.stop()
                 time.sleep(0.01)
-                robotDrive.reverse(DutyCycle-2)
+                drive.reverse(duty_cycle - 2)
                 time.sleep(0.25)
-                robotDrive.left(DutyCycle-2)
+                drive.left(duty_cycle - 2)
                 time.sleep(0.25)
-                robotDrive.forward(DutyCycle)
+                drive.forward(duty_cycle)
             else:
-                robotDrive.forward()
+                drive.forward()
 
         else:
             pass
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     try:
-        ultrasonic = HCSR04()
+        ultrasonic = UltrasonicRanger()
         led = LED()
-        robotDrive = TB6612FNG()
-        loop(ultrasonic, robotDrive, led)
+        robot_drive = MotorDriver()
+        loop(ultrasonic, robot_drive, led)
     except KeyboardInterrupt:
         ultrasonic.destroy()
-
