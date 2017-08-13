@@ -16,6 +16,7 @@ def loop(sensor, drive):
         #      distance = sensor.get_average_distance()
         # except BadDistanceException:
         #      pass
+
         qualifier, distance = sensor.get_average_distance()
         if qualifier == 1:
             if distance < 20:
