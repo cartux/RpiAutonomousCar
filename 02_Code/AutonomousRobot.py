@@ -11,6 +11,11 @@ def loop(sensor, drive):
     duty_cycle = 4
 
     while True:
+        # TODO: Replace with try-except clause, e.g.
+        # try:
+        #      distance = sensor.get_average_distance()
+        # except BadDistanceException:
+        #      pass
         qualifier, distance = sensor.get_average_distance()
         if qualifier == 1:
             if distance < 20:

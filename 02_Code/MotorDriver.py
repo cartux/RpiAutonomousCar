@@ -5,6 +5,7 @@ import time
 import RPi.GPIO as GPIO
 
 
+# TODO: DRY this code (WET)
 class MotorDriver():
 
     """Class to represent TB6612FNG DC Motor driver."""
