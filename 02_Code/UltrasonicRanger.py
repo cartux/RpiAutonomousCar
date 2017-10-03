@@ -15,6 +15,7 @@ class UltrasonicRanger():
     """Interface with an HCSR04 ultrasonic range sensor."""
 
     def __init__(self):
+        # TODO: These are static, make these class attributes
         self._trigger_pin = 15
         self._echo_pin = 14
         self._timeout  = 0.10 #[s]
@@ -50,6 +51,8 @@ class UltrasonicRanger():
 
         #calculate the distance
         during = time2 - time1
+        # TODO: Don't return a tuple, return the value. First item not needed
+        #  as if function is non-nominal an error is raised.
         return 1, during * 340.0 / 2.0 * 100
 
     # TODO: Eliminate multiple return statements
@@ -57,10 +60,12 @@ class UltrasonicRanger():
         """Return measured distance in cm."""
         i = 0
         distance = 0
+        # TODO: PEP8
         errorCount = 0
         while i < self._average_count:
             qualifier, tmp = self.get_distance()
             if qualifier != -1:
+                # TODO: Replace these with += operator
                 i = i + 1
                 distance = distance + tmp
             else:
@@ -69,6 +74,8 @@ class UltrasonicRanger():
             # raise BadDistanceException()
             if errorCount > 3:
                 return -1, -1
+        # TODO: No tuple, return actual value
+        # TODO: Cast to float, don't multiply by 1.0
         return 1, distance/(self._average_count * 1.0)
 
 
@@ -89,7 +96,7 @@ if __name__ == "__main__":
                 # TODO: Use new-style print syntax (print("Hello world!"))
                 print dis, 'cm'
             else:
-                print "Error duringn reading"
+                print "Error during reading"
 
             time.sleep(1)
 
