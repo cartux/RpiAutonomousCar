@@ -7,6 +7,9 @@ VERBOSE = False
 IP_ADDRESS = "192.168.0.31"
 IP_PORT = 22000
 
+# TODO: Replace this with logging.debug. Easiest is like this:
+# >>> from logging import debug
+# Then you don't have to modify the code which calls this.
 def debug(text):
     if VERBOSE:
         print "Debug:---", text
@@ -50,6 +53,7 @@ def startReceiver():
     receiver = Receiver()
     receiver.start()
 
+# TODO: Escape need for global by passing in connection to send command to
 def sendCommand(cmd):
     debug("sendCommand() with cmd = " + cmd)
     try:
@@ -59,13 +63,19 @@ def sendCommand(cmd):
         debug("Exception in sendCommand()")
         closeConnection()
 
+# TODO: PEP8
 def closeConnection():
+    # TODO: No globals.
     global isConnected
     debug("Closing socket")
     sock.close()
+    # TODO: Don't set this here. Don't use globals. Set after closing socket
+    # in main.
     isConnected = False
 
+# TODO: Replace return False with exception
 def connect():
+    # TODO: No globals. Eliminate the need by returning it.
     global sock
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     debug("Connecting...")
@@ -91,6 +101,7 @@ if __name__ == "__main__":
 
 
         if connect():
+            # TODO: PEP8
             isConnected = True
             print "Connection established"
             time.sleep(1)
